@@ -36,6 +36,7 @@ sudo bash setup.sh --laptop-ip <ip> --raspberry-ip <ip> --mac-adr <MAC> --channe
 - **--mac-adr:** MAC address of the transmitter to filter.
 
 - **--channel, --bandwidth, --core, --spatial-stream:** CSI collection specifications (refer to Nexmon CSI project documentation for details).
+- The bandwith: 40 
 
 ### 4. Optional: Collecting CSI on Raspberry Pi
 

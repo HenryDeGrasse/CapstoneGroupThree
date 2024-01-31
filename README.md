@@ -38,6 +38,9 @@ sudo bash setup.sh --laptop-ip <ip> --raspberry-ip <ip> --mac-adr <MAC> --channe
 - **--channel, --bandwidth, --core, --spatial-stream:** CSI collection specifications (refer to Nexmon CSI project documentation for details).
 - The bandwith: 40 
 
+### 3.5:
+- Make sure to run ```pip3 install -r requirements.txt``` to install all required python3 libraries.
+
 ### 4. Optional: Collecting CSI on Raspberry Pi
 
 If you prefer to collect CSI data directly on the Raspberry Pi without rerouting packets to another laptop, omit the `--laptop-ip` parameter in the setup script.

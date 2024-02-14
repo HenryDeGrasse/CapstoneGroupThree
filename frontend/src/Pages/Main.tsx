@@ -5,6 +5,7 @@ import Dail from "../Components/Dial";
 import ControlButton from "../Components/ControlButton";
 import lighteningBolt from "../Icons/LightneingBolt/Vector 2@2x.png";
 import IconLink from "../Icons/shaver.svg";
+import TestStrapi from "../Components/TestStrapi";
 
 //fake info cards
 const DEMO_TITLE = "Title Area";
@@ -56,6 +57,7 @@ function Main() {
         padding: " 1.42vh 8.3vw",
       }}
     >
+      <TestStrapi></TestStrapi>
       <div
         className="Info-area"
         style={{

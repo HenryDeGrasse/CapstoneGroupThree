@@ -81,6 +81,8 @@ def process_file(file: str, savecomplex: bool, plot:bool, saveplot: bool):
         pickle_out = open(os.path.splitext(file)[0] + ".cmplx", "wb")
         pickle.dump(collector_complex, pickle_out)
         pickle_out.close()
+        #for csi in collector_complex: NOTE: Added this to be able to save it to a csv, in order to see what the raw cmplx data looked like
+        #    sve_complex_to_csv(file, csi['time_stamp_ns'], csi['complex_csi'])
     
     if plot or saveplot:
         fig, axes = plt.subplots(nrows=len(collector_complex), ncols=1)

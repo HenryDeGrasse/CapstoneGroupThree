@@ -3,4 +3,5 @@ matplotlib
 pandas
 PyQt6
 tqdm
-
+scikit-learn
+seaborn

@@ -18,7 +18,7 @@ def read_file(filename):
         data = mp.load()
     return data
 
-data = read_file(os.path.join("ExperimentData/" + file))
+data = read_file(os.path.join("ML_Model", "ExperimentData", file))
 CSIs = []
 grouped_packets = []
 
@@ -41,7 +41,7 @@ for csi in CSIs:
 
 # Load your trained model (if not already in memory)
 model = SimpleCNN()
-model.load_state_dict(torch.load('model.pth'))
+model.load_state_dict(torch.load('ML_Model/model.pth'))
 model.eval()
 
 timestamp = 0

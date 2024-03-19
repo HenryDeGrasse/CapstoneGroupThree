@@ -1,4 +1,5 @@
 import React, { FC, useState } from "react";
+import { useGameSettings } from "../GameSettingProvider";
 
 type DailProps = {
   currentTemp: number;
@@ -6,16 +7,16 @@ type DailProps = {
 };
 
 const Dail: React.FC<DailProps> = ({ currentTemp, setTemp }) => {
-
+  const {temperatureUser, temperatureReading,setTemperatureReading,setTemperatureUser}= useGameSettings()
   // State to hold the current count
-  const [temp, setCount] = useState(setTemp);
+
 
   // Function to handle button click and update count
   const increaseTemp = () => {
-    setCount(temp < 90 ? temp + 1 : temp);
+    setTemperatureUser(temperatureUser < 90 ? temperatureUser + 1 : temperatureUser);
   };
   const decreaseTemp = () => {
-    setCount(temp > 60 ? temp - 1 : temp);
+    setTemperatureUser(temperatureUser > 60 ? temperatureUser - 1 : temperatureUser);
   };
 
   const ChangeTempButton: React.FC<{
@@ -63,9 +64,9 @@ const Dail: React.FC<DailProps> = ({ currentTemp, setTemp }) => {
     >
       <ChangeTempButton isIncrease={false} onClick={decreaseTemp} />
       <Ellipse
-        currentTemp={currentTemp}
+        currentTemp={temperatureReading}
         fill="#315B0F"
-        setTemp={temp}
+        setTemp={temperatureUser}
         radius={250 / (2 * Math.PI)}
         strokeWidth={5}
       />

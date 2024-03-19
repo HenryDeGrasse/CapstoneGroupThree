@@ -4,7 +4,12 @@ import Vents from "../Components/Vent";
 import Dail from "../Components/Dial";
 import ControlButton from "../Components/ControlButton";
 import lighteningBolt from "../Icons/LightneingBolt/Vector 2@2x.png";
-import IconLink from "../Icons/shaver.svg";
+import lightIconLink from "../Icons/shaver.svg";
+import locationIconLink from '../Icons/Discovery.svg'
+import surveillianceIconLink from '../Icons/surveillance-cameras-one.svg'
+import vacationIconLink from '../Icons/Time Circle.svg'
+import { useGameSettings } from "../GameSettingProvider";
+import WeatherApp from "../Components/weather";
 
 //fake info cards
 const DEMO_TITLE = "Title Area";
@@ -14,7 +19,7 @@ const DEMO_IMAGE = lighteningBolt;
 
 //fake buttons
 const DEMO_ICON_TITLE = "Demo";
-const DEMO_ICON_LINK = IconLink;
+const DEMO_ICON_LINK = lightIconLink;
 
 type TitleBoxProps = {
   SectionTitle: string;
@@ -45,15 +50,20 @@ function TitleBox({ SectionTitle }: TitleBoxProps) {
 }
 
 function Main() {
-    {/* Landing page component*/}
+  const {currentWeather, temperatureReading, temperatureUser,setCurrentWeather, highWeather, setHighWeather, lowWeather, setLowWeather, userName, feelsLike,setFeelsLike}= useGameSettings()
+  const weatherDesc= WeatherApp()
   return (
+    <div  style={{display:"flex", flexDirection:'row', justifyContent:'center'}}>
     <div
       style={{
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: " 10px",
-        padding: " 1.42vh 8.3vw",
+        maxWidth:'390px',
+        maxHeight:'80%', 
+        backgroundColor:'#fbfff2',
+        justifyContent:'space-around', 
+        padding: " 1.42vh 3.3vw",
       }}
     >
       <div
@@ -67,7 +77,7 @@ function Main() {
           gap: "25px",
         }}
       >
-        <Infobox Title={DEMO_TITLE} Description={DEMO_DESCRIPTION} />
+        <Infobox Title={`Hi ${userName}!`} Description={weatherDesc} />
         <Infobox
           Title={DEMO_TITLE}
           Description={DEMO_DESCRIPTION}
@@ -77,14 +87,9 @@ function Main() {
         />
       </div>
       <TitleBox SectionTitle="Vents" />
-      <Vents
-        leftOnePercent={10}
-        leftTwoPercent={90}
-        rightOnePercent={30}
-        rightTwoPercent={50}
-      />
+      <Vents/>
       <TitleBox SectionTitle="Temps" />
-      <Dail currentTemp={75} setTemp={72} />
+      <Dail currentTemp={temperatureReading} setTemp={temperatureUser} />
       <TitleBox SectionTitle="Controls" />
       <div
         className="control-button-area"
@@ -96,11 +101,12 @@ function Main() {
           justifyContent: "center",
         }}
       >
-        <ControlButton iconLink={DEMO_ICON_LINK} iconTitle={DEMO_ICON_TITLE} />
-        <ControlButton iconLink={DEMO_ICON_LINK} iconTitle={DEMO_ICON_TITLE} />
-        <ControlButton iconLink={DEMO_ICON_LINK} iconTitle={DEMO_ICON_TITLE} />
-        <ControlButton iconLink={DEMO_ICON_LINK} iconTitle={DEMO_ICON_TITLE} />
+        <ControlButton iconLink={lightIconLink} iconTitle={'light button '} />
+        <ControlButton iconLink={surveillianceIconLink} iconTitle={'surveillance button'} />
+        <ControlButton iconLink={locationIconLink} iconTitle={'localizing button '} />
+        <ControlButton iconLink={vacationIconLink} iconTitle={'vacation setting button'} />
       </div>
+    </div>
     </div>
   );
 }

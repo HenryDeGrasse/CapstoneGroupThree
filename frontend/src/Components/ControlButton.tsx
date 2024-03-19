@@ -10,6 +10,9 @@ export const dynamicStyles = (isIconOn: boolean): React.CSSProperties => {
     height: "75%",
     borderRadius: "50%",
     objectFit: "cover",
+    display:"flex", 
+    alignItems:'center', 
+    justifyContent:'center',
   };
 };
 
@@ -31,7 +34,9 @@ const ControlButton: React.FC<ControlButtonsProps> = ({
         style={{ borderRadius: "50%", display:"flex", alignItems:'center', justifyContent:'center', border: "none", padding: "0", width: "4.7vh", backgroundColor:"#315B0F",
         height: "4.7vh"}}
       >
-        <img src={iconLink} alt={`${iconTitle} icon`} style={IconStyles} />
+        <div style={IconStyles}>
+        <img src={iconLink} alt={`${iconTitle} icon`} style={{width:'75%'}} />
+        </div>
       </button>
     </div>
   );

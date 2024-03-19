@@ -1,64 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react'
+import './vents.css'
+const paragraphStyles={
+  color: '#FFFFFF',
+  fontFamily: 'Inter',
+  fontSize: '8px',
+  fontStyle: 'normal',
+  fontWeight: 600,
+  lineHeight: '9px',
+  padding: '5px'
+}
+const Slider: React.FC<{
+  label: string
+  value: number
+  onChange: (value: number) => void
+}> = ({ label, value, onChange }) => (
+  < div className='vent-styles' >
+    <p style={paragraphStyles} >
+      {label}
+    </p>
+    <input
+  className="slider"
+  type="range"
+  min="0"
+  max="180"
+  value={value}
+  onChange={(event) => onChange(parseInt(event.target.value, 10))}
+/>
 
-type VentProps = {
-  leftOnePercent: number;
-  leftTwoPercent: number;
-  rightOnePercent: number;
-  rightTwoPercent: number;
-};
+    <p style={paragraphStyles}>{value}</p>
+   
+  </div>
+)
 
-const MyLineComponent: React.FC<{ percentage: number }> = ({ percentage }) => {
-  const lineStyle:React.CSSProperties = {
-    borderTop: '2px solid #F4FFEB', // Set the border style to create a green line
-    width: '100%',
-    height: '4px',
-    backgroundColor: '#F4FFEB',
-    
-  };
+const Vents: React.FC = () => {
+  const [leftValue, setLeftValue] = useState<number>(50)
+  const [rightValue, setRightValue] = useState<number>(50)
 
   return (
-    <div style={lineStyle}>
-        <div style={{borderTop: '2px solid #122701', // Set the border style to create a green line
-    width: `${percentage}%`,
-    height: '4px',
-    display:'flex',
-    alignSelf:'center',
-    backgroundColor: '#122701'}}>
-
-        </div>
+    <div className='vent'>
+      <Slider label="up" value={leftValue} onChange={setLeftValue} />
+      <Slider label="down" value={rightValue} onChange={setRightValue} />
     </div>
-  );
-};
+  )
+}
 
-const Vents: React.FC<VentProps> = ({
-  leftOnePercent,
-  leftTwoPercent,
-  rightOnePercent,
-  rightTwoPercent,
-}) => {
-  return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection:'column',
-        width: '90%',
-        padding:' 0 10px',
-        height: '178px',
-        borderRadius: '10px',
-        backgroundColor: '#315B0F',
-        gap:'36px',
-        justifyContent:'center',
-        boxShadow:
-          '0px 4px 4px 0px rgba(0, 0, 0, 0.25), 0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
-    
-      }}
-    >
-      <MyLineComponent percentage={leftOnePercent} />
-      <MyLineComponent percentage={leftTwoPercent} />
-      <MyLineComponent percentage={rightOnePercent} />
-      <MyLineComponent percentage={rightTwoPercent} />
-    </div>
-  );
-};
-
-export default Vents;
+export default Vents

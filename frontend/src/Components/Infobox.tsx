@@ -7,6 +7,7 @@ type InfoboxProps = {
     Description: string;
     Image?: string;
     BackgroundColor?: string;
+   
     TextColor?: string;
   };
 const Infobox: React.FC<InfoboxProps> = ({
@@ -35,13 +36,14 @@ const Infobox: React.FC<InfoboxProps> = ({
         backgroundColor: BackgroundColor || "#F4FFEB",
         display: "flex",
         flexDirection: "column",
+        width:'100%',
         padding: "12px 11.007px 22px 12px",
         justifyContent: "center",
         alignItems: "center",
         borderRadius: "10px",
         boxShadow:
           "0px 4px 4px 0px rgba(0, 0, 0, 0.25), 0px 4px 4px 0px rgba(0, 0, 0, 0.25), 0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-        width: "32.3vw",
+ 
       }}
     >
       <h1 style={TitleStyle}>{Title}</h1>

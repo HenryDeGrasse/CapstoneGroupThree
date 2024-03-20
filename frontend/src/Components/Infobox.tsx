@@ -23,10 +23,10 @@ const Infobox: React.FC<InfoboxProps> = ({
 */}
   const DescriptionStyle: React.CSSProperties = {
     fontFamily: "Inter",
-    fontSize: "8px",
+    fontSize: "9.5px",
     fontStyle: "normal",
     fontWeight: 400,
-    lineHeight: "9px",
+    lineHeight: "9.5px",
     flex: "1 0 0",
     color: TextColor || "#122701",
   };
@@ -76,9 +76,9 @@ const Infobox: React.FC<InfoboxProps> = ({
   const TitleStyle: React.CSSProperties = {
     color: "#122701",
     fontFamily: "Baloo Bhai 2",
-    fontSize: "14px",
+    fontSize: "16px",
     fontStyle: "normal",
-    fontWeight: 700,
+    fontWeight: 800,
     lineHeight: "16px",
     letterSpacing: "0.14px",
     textTransform: "uppercase",

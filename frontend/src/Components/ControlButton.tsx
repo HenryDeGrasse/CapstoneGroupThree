@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 type ControlButtonsProps = {
   iconLink: string;
   iconTitle: string;
+  resp: any;
+  setResp: (alarm: any) => void;
 };
 export const dynamicStyles = (isIconOn: boolean): React.CSSProperties => {
   return {
@@ -12,6 +14,7 @@ export const dynamicStyles = (isIconOn: boolean): React.CSSProperties => {
     objectFit: "cover",
     display:"flex", 
     alignItems:'center', 
+  
     justifyContent:'center',
   };
 };
@@ -19,13 +22,16 @@ export const dynamicStyles = (isIconOn: boolean): React.CSSProperties => {
 const ControlButton: React.FC<ControlButtonsProps> = ({
   iconTitle,
   iconLink,
+  resp, 
+  setResp, 
 }) => {
-  const [isIconOn, setIsIconOn] = useState(false);
-  const IconStyles = dynamicStyles(isIconOn);
+
+  const IconStyles = dynamicStyles(resp);
 
   const handleToggle = () => {
-    setIsIconOn(!isIconOn);
+    setResp(!resp);
   };
+
 
   return (
     <div>

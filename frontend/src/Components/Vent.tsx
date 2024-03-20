@@ -1,22 +1,28 @@
 import React, { useState } from 'react'
 import './vents.css'
-const paragraphStyles={
+import { useGameSettings } from '../GameSettingProvider'
+const paragraphStyles: React.CSSProperties={
   color: '#FFFFFF',
-  fontFamily: 'Inter',
-  fontSize: '8px',
   fontStyle: 'normal',
-  fontWeight: 600,
-  lineHeight: '9px',
-  padding: '5px'
+  padding: '5px 0px 0',
+  fontSize: "9.5px",
+  fontWeight: 500,
+  lineHeight: "9.5px",
+  flex: "1 0 0",
+  textAlign:'center',
+  fontFamily: "Inter",
+
+
 }
 const Slider: React.FC<{
-  label: string
+  label1: string
   value: number
+  label2: string
   onChange: (value: number) => void
-}> = ({ label, value, onChange }) => (
-  < div className='vent-styles' >
+}> = ({ label1,label2, value, onChange }) => (
+  < div className='vent-styles'  >
     <p style={paragraphStyles} >
-      {label}
+      {label1}
     </p>
     <input
   className="slider"
@@ -27,19 +33,23 @@ const Slider: React.FC<{
   onChange={(event) => onChange(parseInt(event.target.value, 10))}
 />
 
-    <p style={paragraphStyles}>{value}</p>
+    <p style={paragraphStyles}>{label2}</p>
    
   </div>
 )
 
 const Vents: React.FC = () => {
-  const [leftValue, setLeftValue] = useState<number>(50)
-  const [rightValue, setRightValue] = useState<number>(50)
+  const {ventTop,setVentTop}=useGameSettings()
+  // const [rightValue, setRightValue] = useState<number>(50)
 
   return (
+    <div style={{paddingBottom:'30px', width:'100%'}}>
     <div className='vent'>
-      <Slider label="up" value={leftValue} onChange={setLeftValue} />
-      <Slider label="down" value={rightValue} onChange={setRightValue} />
+        <p style={paragraphStyles}> Degree: {ventTop}</p>
+      <Slider label1="Open" label2='Close' value={ventTop} onChange={setVentTop} />
+    
+      {/* <Slider label="down" value={rightValue} onChange={setRightValue} /> */}
+    </div>
     </div>
   )
 }

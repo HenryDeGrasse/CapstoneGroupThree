@@ -74,7 +74,7 @@ const WeatherApp= () => {
 };
 function celsiusToKelvin(kelvin:number) {
     const farenheit =(kelvin - 273.15) * 9 / 5 + 32
-    return Number((farenheit).toFixed(2));
+    return Math.ceil(farenheit);
   }
   
 

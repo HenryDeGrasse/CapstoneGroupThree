@@ -1,13 +1,10 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useGameSettings } from "../GameSettingProvider";
 
-type DailProps = {
-  currentTemp: number;
-  setTemp: number;
-};
 
-const Dail: React.FC<DailProps> = ({ currentTemp, setTemp }) => {
-  const {temperatureUser, temperatureReading,setTemperatureReading,setTemperatureUser}= useGameSettings()
+
+const Dail: React.FC = () => {
+  const {temperatureUser, temperatureReading, setTemperatureReading, setTemperatureUser}= useGameSettings()
   // State to hold the current count
 
 
@@ -18,7 +15,7 @@ const Dail: React.FC<DailProps> = ({ currentTemp, setTemp }) => {
   const decreaseTemp = () => {
     setTemperatureUser(temperatureUser > 60 ? temperatureUser - 1 : temperatureUser);
   };
-
+ 
   const ChangeTempButton: React.FC<{
     isIncrease: boolean;
     onClick: () => void;
@@ -58,6 +55,8 @@ const Dail: React.FC<DailProps> = ({ currentTemp, setTemp }) => {
       style={{
         paddingBottom: "30px",
         display: "flex",
+        width:'100%',
+        justifyContent:'center',
         flexDirection: "row",
         alignItems: "center",
       }}
@@ -137,7 +136,7 @@ const Ellipse: FC<EllipseProps> = ({
       {/* Group with filter */}
       <g
         transform={`translate(${radius}, ${radius})`}
-        filter={`url(#filter0_d_${radius}_${circumferenceCurr}_layer1)`}
+        // filter={`url(#filter0_d_${radius}_${circumferenceCurr}_layer1)`}
       >
         {/* Ellipse for the first shape in Layer 1 */}
         <Arch

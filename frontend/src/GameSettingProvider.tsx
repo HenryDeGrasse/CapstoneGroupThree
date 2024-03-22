@@ -1,5 +1,5 @@
 import React, { createContext,useEffect, ReactNode, useContext, useState } from 'react'
-
+import axios from 'axios';
 
 
 type GameSettingsContextType = {
@@ -29,6 +29,9 @@ type GameSettingsContextType = {
     setVacation: (hold: boolean) => void;
     light: boolean;
     setLight: (light: boolean) => void;
+    alarm: boolean;
+    setAlarm: (alarm: boolean) => void;
+    
   };
   
 
@@ -67,6 +70,67 @@ export const GameSettingsProvider: React.FC<GameSettingsProviderProps> = ({
   const [csiData, setCsiData] = useState<boolean>(false)
   const [vacation, setVacation] = useState<boolean>(false)
   const [light, setLight] = useState<boolean>(false)
+  const [alarm,setAlarm]=useState<boolean>(false)
+  const [counter, setCounter] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      const host= '10.110.226.121'
+      const url =  `http://${host}:1337/api/gpio-pins/1`
+      if (counter === 0){
+        try {
+          const response = await axios.get(url);
+          const data=response.data.data.attributes;
+          console.log(data)
+          setTemperatureReading(data.tempRead)
+          setTemperatureUser(data.tempUser)
+          setLight(data.light)
+          setAlarm(data.alarm)
+          setVacation(data.vacationHold)
+          setVentTop(data.ventAngle)
+
+        } catch (error) {
+          console.error('Error fetching GPIO pin:', error);
+        }
+      }
+      if (counter % 2 === 1) {
+        // Fetch GPIO pin
+        try {
+          const response = await axios.get(url);
+          const data=response.data.data.attributes;
+          console.log(data)
+          setTemperatureReading(data.tempRead)
+
+
+        } catch (error) {
+          console.error('Error fetching GPIO pin:', error);
+        }
+      } else {
+        // Send GPIO pin
+        try {
+          const data_val = {
+            "data": {
+              "light": light,
+              "vacationHold": vacation,
+              "tempRead": temperatureReading,
+              "tempUser": temperatureUser,
+              "ventAngle": ventTop,
+              "alarm": alarm
+            }
+          }; 
+            console.log('to be put data' , data_val)
+            const response = await axios.put(url, data_val)
+          
+  
+        } catch (error) {
+          console.error('Error sending GPIO pin:', error);
+        }
+      }
+      setCounter((prevCounter) => prevCounter + 1); // Increment counter by 1
+    }, 500); // Change interval to every 2 seconds
+
+    return () => clearInterval(interval);
+  }, [counter]); // Add dependencies to useEffect if needed
+
 
   return (
     <GameSettingsContext.Provider
@@ -97,6 +161,8 @@ export const GameSettingsProvider: React.FC<GameSettingsProviderProps> = ({
         setVacation: setVacation,
         light,
         setLight: setLight,
+        alarm, 
+        setAlarm:setAlarm,
       }}
     >
       {children}

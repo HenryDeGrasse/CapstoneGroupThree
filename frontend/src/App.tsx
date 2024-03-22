@@ -1,17 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 import GameSettingsProvider from './GameSettingProvider';
-import Main from './Pages/Main'; 
+import Main from './Pages/Main';
+import LandingPage from './Pages/LandingPage';
 
 function App() {
-  return (
-   <>
-   <GameSettingsProvider>
-    <Main/>
-    </GameSettingsProvider>
+  const [showMain, setShowMain] = useState(false);
 
-   </>
+  const toggleShowMain = () => setShowMain((prevShowMain) => !prevShowMain);
+
+  return (
+    <>
+      <GameSettingsProvider>
+        {showMain ? (
+          <Main />
+        ) : (
+          <LandingPage onClick={toggleShowMain} />
+        )}
+      </GameSettingsProvider>
+    </>
   );
 }
 

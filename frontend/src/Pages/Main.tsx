@@ -1,4 +1,6 @@
-import React from "react";
+
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Infobox from "../Components/Infobox";
 import Vents from "../Components/Vent";
 import Dail from "../Components/Dial";
@@ -50,20 +52,58 @@ function TitleBox({ SectionTitle }: TitleBoxProps) {
 }
 
 function Main() {
-  const {currentWeather, temperatureReading, temperatureUser,setCurrentWeather, highWeather, setHighWeather, lowWeather, setLowWeather, userName, feelsLike,setFeelsLike}= useGameSettings()
+  type data= {
+    light: boolean,
+    vacationHold: boolean,
+    tempRead: number,
+    tempUser: number,
+    ventAngle: number,
+    alarm: boolean
+  }
+  const {temperatureUser,
+    temperatureReading,
+    setTemperatureUser,
+    setTemperatureReading,
+    ventTop,
+    setVentTop,
+    ventBottom,
+    setVentBottom,
+    humidity,
+    setHumidity,
+    userName,
+    setUserName,
+    currentWeather,
+    csiData,
+    setCsiData,
+    vacation,
+    setVacation,
+    light,
+    alarm,
+    setAlarm, 
+    setLight,setCurrentWeather, highWeather, setHighWeather, lowWeather, setLowWeather, feelsLike,setFeelsLike}=useGameSettings()
+
+
+
+
   const weatherDesc= WeatherApp()
+  
   return (
-    <div  style={{display:"flex", flexDirection:'row', justifyContent:'center'}}>
+
+     <div  style={{display:"flex",   backgroundColor:'#fbfff2', height:'100vh', flexWrap:"wrap", alignContent:'center',flexDirection:'row', justifyContent:'center'}}>
+    
     <div
       style={{
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        maxWidth:'390px',
-        maxHeight:'80%', 
-        backgroundColor:'#fbfff2',
+        // maxWidth:'390px',
+       
+
+
+        transform: 'scale(0.85)',
         justifyContent:'space-around', 
-        padding: " 1.42vh 3.3vw",
+    
+      
       }}
     >
       <div
@@ -79,8 +119,8 @@ function Main() {
       >
         <Infobox Title={`Hi ${userName}!`} Description={weatherDesc} />
         <Infobox
-          Title={DEMO_TITLE}
-          Description={DEMO_DESCRIPTION}
+          Title={'Energy Saver'}
+          Description={'You have saved 35% power since using covered smart home system. Coverd has turned off your light 3 times today and kept the average temperature at 70°F'}
           Image={DEMO_IMAGE}
           BackgroundColor="#315B0F"
           TextColor="#F4FFEB"
@@ -89,7 +129,7 @@ function Main() {
       <TitleBox SectionTitle="Vents" />
       <Vents/>
       <TitleBox SectionTitle="Temps" />
-      <Dail currentTemp={temperatureReading} setTemp={temperatureUser} />
+      <Dail />
       <TitleBox SectionTitle="Controls" />
       <div
         className="control-button-area"
@@ -99,15 +139,19 @@ function Main() {
           alignItems: "center",
           gap: "41px",
           justifyContent: "center",
+          paddingBottom: "20px",
+          width:'100%',
+            
+        
         }}
       >
-        <ControlButton iconLink={lightIconLink} iconTitle={'light button '} />
-        <ControlButton iconLink={surveillianceIconLink} iconTitle={'surveillance button'} />
-        <ControlButton iconLink={locationIconLink} iconTitle={'localizing button '} />
-        <ControlButton iconLink={vacationIconLink} iconTitle={'vacation setting button'} />
+        <ControlButton iconLink={lightIconLink} iconTitle={'light button '} resp={light} setResp={setLight}/>
+        <ControlButton iconLink={surveillianceIconLink} iconTitle={'surveillance button'} resp={alarm} setResp={setAlarm}/>
+        <ControlButton iconLink={locationIconLink} iconTitle={'localizing button '} resp={csiData} setResp={setCsiData} />
+        <ControlButton iconLink={vacationIconLink} iconTitle={'vacation setting button'}  resp={vacation} setResp={setVacation} />
       </div>
     </div>
-    </div>
+   </div>
   );
 }
 

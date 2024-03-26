@@ -15,7 +15,7 @@ class SimpleCNN(nn.Module):
         self.pool = nn.MaxPool2d(kernel_size=2, stride=2, padding=0)
 
         # Calculate the size of the features after pooling
-        self.feature_size = self._get_conv_output((1, 30, 232))
+        self.feature_size = self._get_conv_output((1, 60, 232))
 
         # Fully connected layers
         self.fc1 = nn.Linear(self.feature_size, 128)

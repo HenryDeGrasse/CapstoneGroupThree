@@ -10,7 +10,7 @@ from CSIDataset import get_CSIs, toDataset
 from TrainCNN import train, evaluate
 
 def main():
-    CSIs, Labels = get_CSIs("TrainingData")
+    CSIs, Labels = get_CSIs("ML_Model/TrainingData")
 
     train_dataset, test_dataset = toDataset(CSIs, Labels)
 
@@ -31,7 +31,7 @@ def main():
         print(f"Epoch {epoch+1}/{num_epochs}, Train Loss: {train_loss:.4f}, Test Loss: {test_loss:.4f}, Test Accuracy: {test_accuracy:.4f}")
 
     
-    torch.save(model.state_dict(), 'model.pth')
+    torch.save(model.state_dict(), 'ML_Model/model.pth')
     print("Saved trained model to 'model.pth'")
 
 if __name__ == "__main__":

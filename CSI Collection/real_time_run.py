@@ -4,17 +4,19 @@ import time
 import torch
 import numpy as np
 import ctypes
+import matplotlib.pyplot as plt
 from ML_Model.CSIDataset import process_csi
 from ML_Model.SimpleCNN import SimpleCNN
 
 class DataCollectorModelRunner:
-    def __init__(self, model_path='ML_Model/model.pth', frequency=30, packet_num=30, collection_interval=10):
+    def __init__(self, model_path='ML_Model/model.pth', frequency=60, packet_num=60, collection_interval=1):
         self.model_path = model_path
         self.frequency = frequency
         self.packet_num = packet_num
         self.collection_interval = collection_interval
         self.model = None
         self.collected_data = None
+        self.amp_data = []
 
     def init_model(self):
         self.model = SimpleCNN()
@@ -30,10 +32,28 @@ class DataCollectorModelRunner:
         collected_data = []
         for _ in range(self.packet_num):
             data, addr = client.recvfrom(4096)
+            #print(data, addr)
             collected_data.append((data, addr))
 
         client.close()
         return collected_data
+
+    def plot_complex_csi(self):
+        amp_array = np.array(self.amp_data)
+
+        # Assuming each row in amp_array represents a packet
+        if amp_array.shape[1] == 256:  # 80 MHz collection
+            amp_array = np.delete(amp_array, [0, 1, 2, 3, 4, 115, 116, 117, 118, 119, 120, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 253, 254, 255], axis=1)
+        else:
+            print(f"WARNING: pilot and unused subcarrier removal is not implemented for {amp_array.shape[1]} subcarriers.")
+
+        fig, ax = plt.subplots()
+        ax.imshow(amp_array.T, interpolation="nearest", aspect="auto")
+        ax.set_title("CSI Visualization Over Time")
+        ax.set_xlabel("Packet Number")
+        ax.set_ylabel("Subcarrier")
+        plt.draw()
+        plt.pause(0.2)
 
     def binary_to_complex(self, collected_data):
         complex_cs = []
@@ -42,7 +62,13 @@ class DataCollectorModelRunner:
             if len(data) < 18:
                 continue
 
-            rssi = ctypes.c_int8(int.from_bytes(data[2:3], 'big')).value
+            magic_bytes = data[0:2].hex()
+            rssi = data[2:3].hex()
+            rssi = ctypes.c_int8(int(rssi, 16)).value
+            frame_control = data[3:4].hex()
+            source_mac = data[4:10].hex()
+            sequence_number = data[10:12].hex()
+            #print(magic_bytes, frame_control, source_mac, sequence_number)
             csi = data[18:]
 
             complex_csi = np.array([complex(int.from_bytes(csi[start:start+2], 'little', signed=True),
@@ -56,6 +82,12 @@ class DataCollectorModelRunner:
         complex_csi = self.binary_to_complex(data)
         processed_data = process_csi(complex_csi)
 
+        for packet_csi in complex_csi:
+            amp = abs(packet_csi)  # Convert to amplitude
+            self.amp_data.append(amp)  # Append amplitude data of each packet
+
+        #self.plot_complex_csi()  # Update the plot
+
         processed_data_tensor = torch.tensor(processed_data, dtype=torch.float32).unsqueeze(0)
         with torch.no_grad():
             prediction = self.model(processed_data_tensor)
@@ -67,15 +99,13 @@ class DataCollectorModelRunner:
             self.init_model()
 
         while True:
-            print("Collecting data...")
             collected_data = self.collect_data()
-            print("Processing and predicting...")
             prediction = self.process_and_predict(collected_data)
 
             if prediction == 1:
-                print("There is movement.")
+                print("Movement detected.")
             else:
-                print("There is no movement.")
+                print("No movement detected.")
 
             time.sleep(self.collection_interval)
 

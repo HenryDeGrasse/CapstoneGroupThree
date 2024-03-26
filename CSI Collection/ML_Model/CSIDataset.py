@@ -49,7 +49,7 @@ def get_CSIs(directory):
                     processed_packet = process_csi(entry['complex_csi'])
                     for packet in processed_packet:
                         grouped_packets.append(packet)
-                        if len(grouped_packets) == 30:  # Grouping 30 packets
+                        if len(grouped_packets) == 60:  # Grouping 30 packets
                             CSIs.append(np.vstack(grouped_packets))
                             Labels.append(label)
                             grouped_packets = []  # Reset for next group

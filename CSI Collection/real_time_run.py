@@ -7,6 +7,10 @@ import ctypes
 import matplotlib.pyplot as plt
 from ML_Model.CSIDataset import process_csi
 from ML_Model.SimpleCNN import SimpleCNN
+import requests
+import asyncio
+
+HOST= '129.10.156.160'
 
 class DataCollectorModelRunner:
     def __init__(self, model_path='ML_Model/model.pth', frequency=60, packet_num=60, collection_interval=1):
@@ -106,8 +110,47 @@ class DataCollectorModelRunner:
                 print("Movement detected.")
             else:
                 print("No movement detected.")
+            set_csi_frontend(prediction)
 
             time.sleep(self.collection_interval)
+
+# async def main():
+#     await update_frontend()
+
+# async def update_frontend():
+#         collector_and_predictor = DataCollectorModelRunner()
+#         collector_and_predictor.run()
+
+def set_csi_frontend(movement:bool):
+        
+        # Constructing the URL for the GET request
+        url = f'http://{HOST}:1337/api/csi-datas/1'
+
+        # Sending a GET request to the URL
+        mvmt = True if movement else False
+
+        #response = requests.put(url)
+        data = {
+            'data': {
+                #'attributes': {
+                    'InRoom': mvmt,
+                    'ventLeft': True,
+                    "ventAngle": 0
+                #}
+            }
+        }
+
+        response = requests.put(url, json=data)
+
+
+        # Checking if the request was successful
+        if response.status_code == 200:
+            print("Temperature set successfully!")
+            return True
+        else:
+            print(f"Failed to set temperature. Status code: {response.status_code}")
+            return False
+
 
 if __name__ == "__main__":
     collector_and_predictor = DataCollectorModelRunner()

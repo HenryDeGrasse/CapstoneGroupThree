@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './vents.css'
 import { useGameSettings } from '../GameSettingProvider'
-const paragraphStyles: React.CSSProperties={
+export const paragraphStyles: React.CSSProperties={
   color: '#FFFFFF',
   fontStyle: 'normal',
   padding: '5px 0px 0',
@@ -28,7 +28,7 @@ const Slider: React.FC<{
   className="slider"
   type="range"
   min="0"
-  max="180"
+  max="100"
   value={value}
   onChange={(event) => onChange(parseInt(event.target.value, 10))}
 />
@@ -46,7 +46,7 @@ const Vents: React.FC = () => {
     <div style={{paddingBottom:'30px', width:'100%'}}>
     <div className='vent'>
         <p style={paragraphStyles}> Degree: {ventTop}</p>
-      <Slider label1="Open" label2='Close' value={ventTop} onChange={setVentTop} />
+      <Slider label1="Close" label2='Open' value={ventTop} onChange={setVentTop} />
     
       {/* <Slider label="down" value={rightValue} onChange={setRightValue} /> */}
     </div>

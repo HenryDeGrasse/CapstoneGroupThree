@@ -55,14 +55,14 @@ const WeatherApp= () => {
   useEffect(() => {
     axios
       .get(URL)
-      .then((response) => {
+      .then((response:any) => {
         const data:WeatherResponse = response.data;
         setCurrentWeather(celsiusToKelvin(data.main.temp));
         setHighWeather(celsiusToKelvin(data.main.temp_max));
         setLowWeather(celsiusToKelvin(data.main.temp_min));
         setFeelsLike(celsiusToKelvin(data.main.feels_like));
       })
-      .catch((error) => {
+      .catch((error:any) => {
         console.error("Error fetching weather data:", error);
       });
   }, []);

@@ -7,9 +7,9 @@ class SimpleCNN(nn.Module):
         super(SimpleCNN, self).__init__()
         
         # First convolutional layer
-        self.conv1 = nn.Conv2d(in_channels=1, out_channels=32, kernel_size=(2,2), stride=1, padding=1)
+        self.conv1 = nn.Conv2d(in_channels=1, out_channels=32, kernel_size=(3,3), stride=1, padding=1)
         # Second convolutional layer
-        self.conv2 = nn.Conv2d(in_channels=32, out_channels=64, kernel_size=(3,3), stride=1, padding=1)
+        self.conv2 = nn.Conv2d(in_channels=32, out_channels=64, kernel_size=(2,2), stride=1, padding=1)
 
         # Max pooling
         self.pool = nn.MaxPool2d(kernel_size=2, stride=2, padding=0)

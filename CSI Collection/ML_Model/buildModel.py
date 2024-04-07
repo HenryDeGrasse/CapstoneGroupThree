@@ -22,7 +22,7 @@ def main():
     optimizer = optim.Adam(model.parameters(), lr=0.001)
 
     # Define the number of epochs
-    num_epochs = 20
+    num_epochs = 22
 
     # Training loop
     for epoch in range(num_epochs):

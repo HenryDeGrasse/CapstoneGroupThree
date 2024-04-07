@@ -10,7 +10,7 @@ from ML_Model.SimpleCNN import SimpleCNN
 import requests
 import asyncio
 
-HOST= '129.10.156.160'
+HOST= '129.10.248.99'
 
 class DataCollectorModelRunner:
     def __init__(self, model_path='ML_Model/model.pth', frequency=60, packet_num=60, collection_interval=1):
@@ -145,7 +145,7 @@ def set_csi_frontend(movement:bool):
 
         # Checking if the request was successful
         if response.status_code == 200:
-            print("Temperature set successfully!")
+            #print("Temperature set successfully!")
             return True
         else:
             print(f"Failed to set temperature. Status code: {response.status_code}")

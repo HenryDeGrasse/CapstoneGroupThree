@@ -1,16 +1,20 @@
 {
   "files": {
-    "main.css": "/static/css/main.e6c13ad2.css",
-    "main.js": "/static/js/main.9dded762.js",
+    "main.css": "/static/css/main.ccb55700.css",
+    "main.js": "/static/js/main.7584bc3a.js",
     "static/js/787.9e9f4ffd.chunk.js": "/static/js/787.9e9f4ffd.chunk.js",
+    "static/media/Group 12.svg": "/static/media/Group 12.3168799378409f0bd1e72dce8e2b0e23.svg",
+    "static/media/surveillance-cameras-one.svg": "/static/media/surveillance-cameras-one.83991b5009a250f928c9465505f1f416.svg",
+    "static/media/Discovery.svg": "/static/media/Discovery.9a190f03cedf4b52af0be0ffbb9fd3a5.svg",
+    "static/media/Time Circle.svg": "/static/media/Time Circle.6d9ce3b72f4b877774cdaf2c1d0f5399.svg",
     "static/media/shaver.svg": "/static/media/shaver.0e9b9619df34fe7ddcb05b9aed32fb99.svg",
     "index.html": "/index.html",
-    "main.e6c13ad2.css.map": "/static/css/main.e6c13ad2.css.map",
-    "main.9dded762.js.map": "/static/js/main.9dded762.js.map",
+    "main.ccb55700.css.map": "/static/css/main.ccb55700.css.map",
+    "main.7584bc3a.js.map": "/static/js/main.7584bc3a.js.map",
     "787.9e9f4ffd.chunk.js.map": "/static/js/787.9e9f4ffd.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e6c13ad2.css",
-    "static/js/main.9dded762.js"
+    "static/css/main.ccb55700.css",
+    "static/js/main.7584bc3a.js"
   ]
 }

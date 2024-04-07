@@ -27,13 +27,11 @@ type TitleBoxProps = {
   SectionTitle: string;
 };
 
-const TitleDesign = {
-  color: "#122701",
+export const TitleDesign = {
+ 
   fontFamily: "Inter",
-  fontSize: "8px",
   fontStyle: "normal",
   fontWeight: 600,
-  lineHeight: "9px",
 };
 
 function TitleBox({ SectionTitle }: TitleBoxProps) {
@@ -46,12 +44,18 @@ function TitleBox({ SectionTitle }: TitleBoxProps) {
         alignItems: "flex-start",
       }}
     >
-      <h1 style={TitleDesign}>{uppercasedTitle}</h1>
+      <h1 style={{  color: "#122701", fontSize: "8px", ...TitleDesign }}>{uppercasedTitle}</h1>
     </div>
   );
 }
 
-function Main() {
+interface MainProps{
+  onLogout:()=>void 
+  onLogout2:()=>void 
+
+
+}
+function Main({onLogout, onLogout2}:MainProps) {
   type data= {
     light: boolean,
     vacationHold: boolean,
@@ -80,7 +84,7 @@ function Main() {
     light,
     alarm,
     setAlarm, 
-    setLight,setCurrentWeather, highWeather, setHighWeather, lowWeather, setLowWeather, feelsLike,setFeelsLike}=useGameSettings()
+    setLight,setCurrentWeather, highWeather, setHighWeather, userData,setUserData,lowWeather, setLowWeather, feelsLike,setFeelsLike}=useGameSettings()
 
 
 
@@ -90,13 +94,13 @@ function Main() {
   return (
 
      <div  style={{display:"flex",   backgroundColor:'#fbfff2', height:'100vh', flexWrap:"wrap", alignContent:'center',flexDirection:'row', justifyContent:'center'}}>
-    
+      
     <div
       style={{
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        // maxWidth:'390px',
+        maxWidth:'390px',
        
 
 
@@ -106,6 +110,7 @@ function Main() {
       
       }}
     >
+       <p onClick={onLogout}style={{alignSelf: 'end'}}>log out </p>
       <div
         className="Info-area"
         style={{
@@ -117,7 +122,7 @@ function Main() {
           gap: "25px",
         }}
       >
-        <Infobox Title={`Hi ${userName}!`} Description={weatherDesc} />
+        <Infobox Title={`Hi ${userData !== null  ? userData.firstname : userName }!`} Description={weatherDesc} />
         <Infobox
           Title={'Energy Saver'}
           Description={'You have saved 35% power since using covered smart home system. Coverd has turned off your light 3 times today and kept the average temperature at 70°F'}
@@ -145,10 +150,10 @@ function Main() {
         
         }}
       >
-        <ControlButton iconLink={lightIconLink} iconTitle={'light button '} resp={light} setResp={setLight}/>
-        <ControlButton iconLink={surveillianceIconLink} iconTitle={'surveillance button'} resp={alarm} setResp={setAlarm}/>
-        <ControlButton iconLink={locationIconLink} iconTitle={'localizing button '} resp={csiData} setResp={setCsiData} />
-        <ControlButton iconLink={vacationIconLink} iconTitle={'vacation setting button'}  resp={vacation} setResp={setVacation} />
+        <ControlButton iconLink={lightIconLink} iconTitle={'Light'} resp={light} setResp={setLight}/>
+        <ControlButton iconLink={surveillianceIconLink} iconTitle={'Security'} resp={alarm} setResp={setAlarm}/>
+        <ControlButton iconLink={locationIconLink} iconTitle={'Monitoring'} resp={csiData} setResp={setCsiData} />
+        <ControlButton iconLink={vacationIconLink} iconTitle={'Vacation'}  resp={vacation} setResp={setVacation} />
       </div>
     </div>
    </div>
